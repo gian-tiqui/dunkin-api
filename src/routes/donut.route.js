@@ -3,16 +3,20 @@ const multer = require("multer");
 const path = require("path");
 const Donut = require("../models/donut.model");
 
-const upload = multer({
-  dest: "uploads/",
-  limits: { fileSize: 1000000 },
+const storage = multer.diskStorage({
+  destination: "uploads/",
   fileFilter: (req, file, cb) => {
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
       return cb(new Error("Only jpg, jpeg, and png files are allowed!"));
     }
+    cb(null, true);
+  },
+  filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
+
+const upload = multer({ storage });
 
 const donutRouter = express.Router();
 
@@ -52,8 +56,6 @@ donutRouter.post(API_URI, upload.single("image"), async (req, res) => {
     }
 
     const imageURI = path.join(__dirname, "uploads", req.file.filename);
-
-    console.log(imageURI);
 
     const savedDonut = await new Donut({
       name,
