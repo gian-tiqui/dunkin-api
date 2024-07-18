@@ -1,5 +1,18 @@
 const express = require("express");
+const multer = require("multer");
+const path = require("path");
 const Donut = require("../models/donut.model");
+
+const upload = multer({
+  dest: "uploads/",
+  limits: { fileSize: 1000000 },
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error("Only jpg, jpeg, and png files are allowed!"));
+    }
+    cb(null, file.originalname);
+  },
+});
 
 const donutRouter = express.Router();
 
@@ -30,9 +43,17 @@ donutRouter.get(`${API_URI}/:id`, async (req, res) => {
   }
 });
 
-donutRouter.post(API_URI, async (req, res) => {
+donutRouter.post(API_URI, upload.single("image"), async (req, res) => {
   try {
-    const { name, quantity, imageURI, price } = req.body;
+    const { name, quantity, price } = req.body;
+
+    if (!req.file) {
+      return res.status(400).json({ message: "No image uploaded" });
+    }
+
+    const imageURI = path.join(__dirname, "uploads", req.file.filename);
+
+    console.log(imageURI);
 
     const savedDonut = await new Donut({
       name,
@@ -41,7 +62,7 @@ donutRouter.post(API_URI, async (req, res) => {
       price,
     }).save();
 
-    res.send(savedDonut);
+    res.status(201).send(savedDonut);
   } catch (error) {
     if (error.name === "ValidationError") {
       const messages = Object.values(error.errors).map((val) => val.message);
