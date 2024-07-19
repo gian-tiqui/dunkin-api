@@ -76,13 +76,23 @@ donutRouter.post(API_URI, upload.single("image"), async (req, res) => {
 });
 
 donutRouter.patch(`${API_URI}/:id`, async (req, res) => {
-  const donutID = req.params.id;
-  const foundDonut = await Donut.findById(donutID);
+  try {
+    const donutId = req.params.id;
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
 });
 
 donutRouter.delete(`${API_URI}/:id`, async (req, res) => {
-  const donutID = req.params.id;
-  const foundDonut = await Donut.findById(donutID);
+  try {
+    const donutID = req.params.id;
+
+    const deletedDonut = await Donut.delete(donutID);
+
+    res.status(202).send(deletedDonut);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
 });
 
 module.exports = donutRouter;
