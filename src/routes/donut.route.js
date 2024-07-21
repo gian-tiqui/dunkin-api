@@ -2,8 +2,13 @@ import express from "express";
 import multer from "multer";
 import Donut from "../models/donut.model.js";
 import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
 
-const __dirname = new URL(".", import.meta.url).pathname;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+console.log(__dirname);
 
 const storage = multer.diskStorage({
   destination: "uploads/",
@@ -90,10 +95,20 @@ donutRouter.patch(`${API_URI}/:id`, async (req, res) => {
 donutRouter.delete(`${API_URI}/:id`, async (req, res) => {
   try {
     const donutID = req.params.id;
+    const foundDonut = await Donut.findById(donutID);
+    const imageName = foundDonut.imageName;
+    const filePath = path.join(__dirname, "..", "..", "uploads", imageName); // Fix path concatenation
 
-    const deletedDonut = await Donut.delete(donutID);
+    console.log(filePath);
+    try {
+      fs.unlinkSync(filePath);
+    } catch (error) {
+      console.error("Error deleting image file:", error);
+    }
 
-    res.status(202).send(deletedDonut);
+    await Donut.deleteOne({ _id: donutID });
+
+    res.status(202).send({ message: "Donut deleted successfully" });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
