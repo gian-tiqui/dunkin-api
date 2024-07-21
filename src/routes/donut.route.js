@@ -1,7 +1,9 @@
-const express = require("express");
-const multer = require("multer");
-const path = require("path");
-const Donut = require("../models/donut.model");
+import express from "express";
+import multer from "multer";
+import Donut from "../models/donut.model.js";
+import path from "path";
+
+const __dirname = new URL(".", import.meta.url).pathname;
 
 const storage = multer.diskStorage({
   destination: "uploads/",
@@ -97,4 +99,4 @@ donutRouter.delete(`${API_URI}/:id`, async (req, res) => {
   }
 });
 
-module.exports = donutRouter;
+export default donutRouter;
