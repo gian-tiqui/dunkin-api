@@ -56,10 +56,12 @@ donutRouter.post(API_URI, upload.single("image"), async (req, res) => {
     }
 
     const imageURI = path.join(__dirname, "uploads", req.file.filename);
+    const imageName = req.file.originalname;
 
     const savedDonut = await new Donut({
       name,
       quantity,
+      imageName,
       imageURI,
       price,
     }).save();

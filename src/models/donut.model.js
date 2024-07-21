@@ -11,6 +11,10 @@ const DonutSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    imageName: {
+      type: String,
+      required: false,
+    },
     imageURI: {
       type: String,
       required: false,
