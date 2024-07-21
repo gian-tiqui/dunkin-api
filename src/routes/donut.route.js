@@ -8,8 +8,6 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log(__dirname);
-
 const storage = multer.diskStorage({
   destination: "uploads/",
   fileFilter: (req, file, cb) => {
@@ -99,7 +97,6 @@ donutRouter.delete(`${API_URI}/:id`, async (req, res) => {
     const imageName = foundDonut.imageName;
     const filePath = path.join(__dirname, "..", "..", "uploads", imageName);
 
-    console.log(filePath);
     try {
       fs.unlinkSync(filePath);
     } catch (error) {
