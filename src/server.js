@@ -1,7 +1,10 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const donutRouter = require("./routes/donut.route");
+import { config } from "dotenv";
+import donutRouter from "./routes/donut.route.js";
+import mongoose from "mongoose";
+import express from "express";
+
+config();
+
 const app = express();
 
 const PORT = process.env.PORT;

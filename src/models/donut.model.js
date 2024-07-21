@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const DonutSchema = mongoose.Schema(
   {
@@ -31,4 +31,4 @@ const DonutSchema = mongoose.Schema(
 
 const Donut = mongoose.model("Donut", DonutSchema);
 
-module.exports = Donut;
+export default Donut;
