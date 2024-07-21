@@ -97,7 +97,7 @@ donutRouter.delete(`${API_URI}/:id`, async (req, res) => {
     const donutID = req.params.id;
     const foundDonut = await Donut.findById(donutID);
     const imageName = foundDonut.imageName;
-    const filePath = path.join(__dirname, "..", "..", "uploads", imageName); // Fix path concatenation
+    const filePath = path.join(__dirname, "..", "..", "uploads", imageName);
 
     console.log(filePath);
     try {
