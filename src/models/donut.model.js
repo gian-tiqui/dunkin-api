@@ -24,9 +24,7 @@ const DonutSchema = mongoose.Schema(
       required: [true, "Donut price required"],
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 const Donut = mongoose.model("Donut", DonutSchema);
