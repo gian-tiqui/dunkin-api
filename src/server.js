@@ -4,12 +4,14 @@ import mongoose from "mongoose";
 import express from "express";
 import comboRouter from "./routes/combo.route.js";
 
+// test
+
 config();
 
 const app = express();
 
 const PORT = process.env.PORT;
-const DB_URI = process.env.DB_URI;
+const DB_URI = process.env.DB_URI || 8080;
 
 const routerInitialization = () => {
   app.use(donutRouter);
