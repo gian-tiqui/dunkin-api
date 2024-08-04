@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import express from "express";
 import comboRouter from "./routes/combo.route.js";
 import cors from "cors";
+import userRouter from "./routes/user.route.js";
 
 config();
 
@@ -18,6 +19,7 @@ const PORT = process.env.PORT;
 const DB_URI = process.env.DB_URI || 8080;
 
 const routerInitialization = () => {
+  app.use(userRouter);
   app.use(donutRouter);
   app.use(comboRouter);
 };
