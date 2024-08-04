@@ -3,8 +3,14 @@ import donutRouter from "./routes/donut.route.js";
 import mongoose from "mongoose";
 import express from "express";
 import comboRouter from "./routes/combo.route.js";
+import cors from "cors";
 
 config();
+
+const corsOptions = {
+  origin: "http://localhost:5174",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+};
 
 const app = express();
 
@@ -18,6 +24,7 @@ const routerInitialization = () => {
 
 const startServer = () => {
   app.use(express.json());
+  app.use(cors(corsOptions));
   console.log("Connected to DB");
   routerInitialization();
   app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
