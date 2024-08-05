@@ -7,11 +7,11 @@ import {
 } from "../controllers/userController.js";
 import validateToken from "../../middleware/validateTokenHandler.js";
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.post("/register", registerUser);
-router.post("/login", login);
-router.get("/api/v1/users", getUsers);
-router.get("/current", validateToken, currentUser);
+userRouter.post("/register", registerUser);
+userRouter.post("/login", login);
+userRouter.get("/api/v1/users", getUsers);
+userRouter.get("/current", validateToken, currentUser);
 
 export default router;
