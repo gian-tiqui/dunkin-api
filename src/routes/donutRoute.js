@@ -1,7 +1,5 @@
 import express from "express";
 import multer from "multer";
-import Donut from "../models/donut.model.js";
-import fs from "fs";
 import {
   createDonut,
   deleteDonut,
@@ -9,7 +7,7 @@ import {
   getDonuts,
   updateDonut,
   welcome,
-} from "../controllers/donut.controller.js";
+} from "../controllers/donutController.js";
 
 const storage = multer.diskStorage({
   destination: "uploads/",
