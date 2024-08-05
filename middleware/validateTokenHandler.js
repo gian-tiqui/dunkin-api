@@ -6,7 +6,6 @@ config();
 
 const validator = async (req, res, next) => {
   let token;
-
   let authHeader = req.headers.Authorization || req.headers.authorization;
 
   if (authHeader && authHeader.startsWith("Bearer")) {
@@ -24,6 +23,8 @@ const validator = async (req, res, next) => {
     if (!token) {
       res.status(401).json({ message: "user is not authorized" });
     }
+  } else {
+    res.status(401).json({ message: "User is not authorized, header missing" });
   }
 };
 

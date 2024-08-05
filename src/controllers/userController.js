@@ -11,12 +11,14 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(400).json("Fields are required");
+      return res.status(400).json("Fields are required");
     }
 
     const user = await User.findOne({ email });
-    const secret = process.env.ACCESS_TOKEN_SECRET;
-    const tokenExpiration = 12 * 60 * 60;
+    const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+    const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
+    const tokenExpiration = 12 * 60 * 60; // 12 hrs
+    const refreshTokenExpiration = 30 * 24 * 60 * 60; // 30 days
     const accessToken = jwt.sign(
       {
         user: {
@@ -25,13 +27,26 @@ export const login = async (req, res) => {
           id: user._id,
         },
       },
-      secret,
+      accessTokenSecret,
       { expiresIn: tokenExpiration }
+    );
+
+    const refreshToken = jwt.sign(
+      {
+        user: {
+          username: user.username,
+          email: user.email,
+          id: user._id,
+        },
+      },
+      refreshTokenSecret,
+      { expiresIn: refreshTokenExpiration }
     );
 
     if (user && (await bcrypt.compare(password, user.password))) {
       res.status(200).json({
         accessToken,
+        refreshToken,
       });
     } else {
       res.status(401).json({ message: "ehe" });
@@ -45,7 +60,6 @@ export const registerUser = async (req, res) => {
   try {
     const { username, email, phone, password } = req.body;
 
-    console.log("Checking if user exists");
     const foundUser = await User.findOne({ email });
 
     if (foundUser) {
