@@ -4,7 +4,7 @@ import { config } from "dotenv";
 
 config();
 
-const jwtFunc = async (req, res, next) => {
+const validator = async (req, res, next) => {
   let token;
 
   let authHeader = req.headers.Authorization || req.headers.authorization;
@@ -27,6 +27,6 @@ const jwtFunc = async (req, res, next) => {
   }
 };
 
-const validateToken = asyncHandler(jwtFunc);
+const validateToken = asyncHandler(validator);
 
 export default validateToken;
