@@ -16,7 +16,7 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({ email });
     const secret = process.env.ACCESS_TOKEN_SECRET;
-    const tokenExpiration = "1m";
+    const tokenExpiration = 12 * 60 * 60;
     const accessToken = jwt.sign(
       {
         user: {

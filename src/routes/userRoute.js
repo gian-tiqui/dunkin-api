@@ -14,4 +14,4 @@ userRouter.post("/login", login);
 userRouter.get("/api/v1/users", getUsers);
 userRouter.get("/current", validateToken, currentUser);
 
-export default router;
+export default userRouter;
