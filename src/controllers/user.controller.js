@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
+import asyncHandler from "express-async-handler";
 
 config();
 
@@ -79,3 +80,11 @@ export const getUsers = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const currentUser = asyncHandler(async (req, res) => {
+  try {
+    res.json(req.user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
