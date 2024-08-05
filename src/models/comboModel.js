@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Donut from "./donutModel";
 
-const ComboSchema = mongoose.Schema(
+const ComboSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -27,6 +27,6 @@ const ComboSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Combo = mongoose.model(ComboSchema);
+const Combo = mongoose.model("Combo", ComboSchema);
 
 export default Combo;

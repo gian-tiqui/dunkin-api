@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const DonutSchema = mongoose.Schema(
+const DonutSchema = new mongoose.Schema(
   {
     name: {
       type: String,
