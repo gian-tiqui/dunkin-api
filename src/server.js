@@ -6,8 +6,6 @@ import comboRouter from "./routes/comboRoute.js";
 import donutRouter from "./routes/donutRoute.js";
 import userRouter from "./routes/userRoute.js";
 
-// change to typescript
-
 config();
 
 const corsOptions = {
