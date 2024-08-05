@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Donut from "./donut.model";
+import Donut from "./donutModel";
 
 const ComboSchema = mongoose.Schema(
   {

@@ -1,10 +1,10 @@
 import { config } from "dotenv";
-import donutRouter from "./routes/donut.route.js";
 import mongoose from "mongoose";
-import express from "express";
-import comboRouter from "./routes/combo.route.js";
 import cors from "cors";
-import userRouter from "./routes/user.route.js";
+import express from "express";
+import comboRouter from "./routes/comboRoute.js";
+import donutRouter from "./routes/donutRoute.js";
+import userRouter from "./routes/userRoute.js";
 
 config();
 
