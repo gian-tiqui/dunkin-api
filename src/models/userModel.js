@@ -1,6 +1,6 @@
 import mongoose, { mongo } from "mongoose";
 
-const UserSchema = mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: [true, "Username is required"],
