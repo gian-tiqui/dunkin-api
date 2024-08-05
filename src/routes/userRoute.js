@@ -4,7 +4,7 @@ import {
   login,
   getUsers,
   currentUser,
-} from "../controllers/user.controller.js";
+} from "../controllers/userController.js";
 import validateToken from "../../middleware/validateTokenHandler.js";
 
 const router = express.Router();

@@ -1,4 +1,4 @@
-import Donut from "../models/donut.model.js";
+import Donut from "../models/donutModel.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
