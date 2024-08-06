@@ -43,11 +43,16 @@ export const login = async (req, res) => {
 
     if (user && (await bcrypt.compare(password, user.password))) {
       res.status(200).json({
-        accessToken,
-        refreshToken,
+        status: "ok",
+        data: {
+          accessToken,
+          refreshToken,
+        },
       });
     } else {
-      res.status(401).json({ message: "ehe" });
+      res
+        .status(401)
+        .json({ status: "not ok", data: { message: "Invalid Credentials" } });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
