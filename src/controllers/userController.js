@@ -10,15 +10,13 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json("Fields are required");
-    }
+    if (!email || !password) return res.status(400).json("Fields are required");
 
     const user = await User.findOne({ email });
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
     const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
-    const tokenExpiration = 12 * 60 * 60; // 12 hrs
-    const refreshTokenExpiration = 30 * 24 * 60 * 60; // 30 days
+    const ACCESS_TOKEN_EXPIRATION = 12 * 60 * 60; // 12hours
+    const REFRESH_TOKEN_EXPIRATION = 30 * 24 * 60 * 60; // 30days
     const accessToken = jwt.sign(
       {
         user: {
@@ -28,7 +26,7 @@ export const login = async (req, res) => {
         },
       },
       accessTokenSecret,
-      { expiresIn: tokenExpiration }
+      { expiresIn: ACCESS_TOKEN_EXPIRATION }
     );
 
     const refreshToken = jwt.sign(
@@ -40,7 +38,7 @@ export const login = async (req, res) => {
         },
       },
       refreshTokenSecret,
-      { expiresIn: refreshTokenExpiration }
+      { expiresIn: REFRESH_TOKEN_EXPIRATION }
     );
 
     if (user && (await bcrypt.compare(password, user.password))) {
