@@ -17,7 +17,7 @@ export const getDonuts = async (req, res) => {
   try {
     const donuts = await Donut.find();
 
-    res.status(200).send(donuts);
+    res.status(200).send({ status: "ok", data: { donuts: donuts } });
   } catch (error) {
     sendErr(res, error);
   }
