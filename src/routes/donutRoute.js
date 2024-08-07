@@ -8,6 +8,7 @@ import {
   updateDonut,
   welcome,
 } from "../controllers/donutController.js";
+import validateToken from "../../middleware/validateTokenHandler.js";
 
 const storage = multer.diskStorage({
   destination: "uploads/",
@@ -27,6 +28,8 @@ const upload = multer({ storage });
 const donutRouter = express.Router();
 
 const API_URI = "/api/v1/donuts";
+
+donutRouter.use(validateToken);
 
 donutRouter.get("/", welcome);
 donutRouter.get(API_URI, getDonuts);
