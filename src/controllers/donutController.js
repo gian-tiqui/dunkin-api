@@ -6,10 +6,6 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const welcome = (req, res) => {
-  res.send("meow meow");
-};
-
 const sendErr = (res, error) => {
   res.status(500).json({ message: error.message });
 };
@@ -29,7 +25,7 @@ export const getDonutById = async (req, res) => {
     const donutID = req.params.id;
     const foundDonut = await Donut.findById(donutID);
 
-    res.status(200).json(foundDonut);
+    res.status(200).json({ status: "ok", data: { donut: foundDonut } });
   } catch (error) {
     sendErr(res, error);
   }
@@ -135,7 +131,9 @@ export const deleteDonut = async (req, res) => {
 
     await Donut.deleteOne({ _id: donutID });
 
-    res.status(202).send({ message: "Donut deleted successfully" });
+    res
+      .status(202)
+      .send({ message: "Donut deleted successfully", status: "success" });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

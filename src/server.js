@@ -8,6 +8,10 @@ import userRouter from "./routes/userRoute.js";
 
 config();
 
+const welcome = (req, res) => {
+  res.send("meow meow");
+};
+
 const corsOptions = {
   origin: "http://localhost:5174",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -27,6 +31,7 @@ const routerInitialization = () => {
 const startServer = () => {
   app.use(express.json());
   app.use(cors(corsOptions));
+  app.use("/", welcome);
   console.log("Connected to DB");
   routerInitialization();
   app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
