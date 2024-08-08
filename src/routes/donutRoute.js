@@ -35,7 +35,7 @@ donutRouter.get("/", welcome);
 donutRouter.get(API_URI, getDonuts);
 donutRouter.get(`${API_URI}/:id`, getDonutById);
 donutRouter.post(API_URI, upload.single("image"), createDonut);
-donutRouter.patch(`${API_URI}/:id`, updateDonut);
+donutRouter.patch(`${API_URI}/:id`, upload.single("image"), updateDonut);
 donutRouter.delete(`${API_URI}/:id`, deleteDonut);
 
 export default donutRouter;

@@ -54,7 +54,6 @@ export const login = async (req, res) => {
         status: "ok",
         data: {
           accessToken,
-          refreshToken,
         },
       });
     } else {
