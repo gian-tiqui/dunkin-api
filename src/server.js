@@ -26,12 +26,12 @@ const routerInitialization = () => {
   app.use(userRouter);
   app.use(donutRouter);
   app.use(comboRouter);
+  app.use("/", welcome);
 };
 
 const startServer = () => {
   app.use(express.json());
   app.use(cors(corsOptions));
-  app.use("/", welcome);
   console.log("Connected to DB");
   routerInitialization();
   app.listen(PORT, () => console.log(`Server running at port ${PORT}`));

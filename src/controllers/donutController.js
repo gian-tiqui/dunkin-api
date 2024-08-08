@@ -7,14 +7,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const sendErr = (res, error) => {
-  res.status(500).json({ message: error.message });
+  return res.status(500).json({ message: error.message });
 };
 
 export const getDonuts = async (req, res) => {
   try {
     const donuts = await Donut.find();
 
-    res.status(200).send({ status: "ok", data: { donuts: donuts } });
+    return res.status(200).send({ status: "ok", data: { donuts: donuts } });
   } catch (error) {
     sendErr(res, error);
   }
@@ -25,7 +25,7 @@ export const getDonutById = async (req, res) => {
     const donutID = req.params.id;
     const foundDonut = await Donut.findById(donutID);
 
-    res.status(200).json({ status: "ok", data: { donut: foundDonut } });
+    return res.status(200).json({ status: "ok", data: { donut: foundDonut } });
   } catch (error) {
     sendErr(res, error);
   }
@@ -51,16 +51,16 @@ export const createDonut = async (req, res) => {
       user,
     }).save();
 
-    res.status(201).send({
+    return res.status(201).send({
       status: "created",
       data: { donut: savedDonut },
     });
   } catch (error) {
     if (error.name === "ValidationError") {
       const messages = Object.values(error.errors).map((val) => val.message);
-      res.status(400).json({ message: messages });
+      return res.status(400).json({ message: messages });
     } else {
-      res.status(500).json({ message: error.message });
+      return res.status(500).json({ message: error.message });
     }
   }
 };
@@ -105,13 +105,13 @@ export const updateDonut = async (req, res) => {
 
     await Donut.findByIdAndUpdate(donutId, donut);
 
-    res.status(200).send({ status: "updated", data: { donut } });
+    return res.status(200).send({ status: "updated", data: { donut } });
   } catch (error) {
     if (error.name === "ValidationError") {
       const messages = Object.values(error.errors).map((val) => val.message);
-      res.status(400).json({ message: messages });
+      return res.status(400).json({ message: messages });
     } else {
-      res.status(500).json({ message: error.message });
+      return res.status(500).json({ message: error.message });
     }
   }
 };
@@ -131,10 +131,10 @@ export const deleteDonut = async (req, res) => {
 
     await Donut.deleteOne({ _id: donutID });
 
-    res
+    return res
       .status(202)
       .send({ message: "Donut deleted successfully", status: "success" });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    return res.status(500).send({ message: error.message });
   }
 };

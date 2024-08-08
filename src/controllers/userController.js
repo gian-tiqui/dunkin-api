@@ -50,19 +50,19 @@ export const login = async (req, res) => {
 
       await newRefreshToken.save();
 
-      res.status(200).json({
+      return res.status(200).json({
         status: "ok",
         data: {
           accessToken,
         },
       });
     } else {
-      res
+      return res
         .status(401)
         .json({ status: "not ok", data: { message: "Invalid Credentials" } });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -90,9 +90,9 @@ export const registerUser = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully" });
+    return res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -100,16 +100,16 @@ export const getUsers = async (req, res) => {
   try {
     const users = await User.find();
 
-    res.json(users);
+    return res.json(users);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
 export const currentUser = asyncHandler(async (req, res) => {
   try {
-    res.json(req.user);
+    return res.json(req.user);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 });
