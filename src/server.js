@@ -6,6 +6,8 @@ import comboRouter from "./routes/comboRoute.js";
 import donutRouter from "./routes/donutRoute.js";
 import userRouter from "./routes/userRoute.js";
 
+export const API_PREFIX = "/api/v1";
+
 config();
 
 const welcome = (req, res) => {
