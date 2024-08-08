@@ -6,7 +6,6 @@ import {
   getDonutById,
   getDonuts,
   updateDonut,
-  welcome,
 } from "../controllers/donutController.js";
 import validateToken from "../../middleware/validateTokenHandler.js";
 
@@ -31,7 +30,6 @@ const API_URI = "/api/v1/donuts";
 
 donutRouter.use(validateToken);
 
-donutRouter.get("/", welcome);
 donutRouter.get(API_URI, getDonuts);
 donutRouter.get(`${API_URI}/:id`, getDonutById);
 donutRouter.post(API_URI, upload.single("image"), createDonut);
