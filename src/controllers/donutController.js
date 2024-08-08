@@ -36,7 +36,7 @@ export const getDonutById = async (req, res) => {
 
 export const createDonut = async (req, res) => {
   try {
-    const { name, quantity, price } = req.body;
+    const { name, quantity, price, user } = req.body;
 
     if (!req.file) {
       return res.status(400).json({ message: "No image uploaded" });
@@ -51,9 +51,13 @@ export const createDonut = async (req, res) => {
       imageName,
       imageURI,
       price,
+      user,
     }).save();
 
-    res.status(201).send(savedDonut);
+    res.status(201).send({
+      status: "created",
+      data: { donut: savedDonut },
+    });
   } catch (error) {
     if (error.name === "ValidationError") {
       const messages = Object.values(error.errors).map((val) => val.message);
