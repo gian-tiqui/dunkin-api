@@ -13,7 +13,7 @@ const RefreshTokenSchema = new mongoose.Schema(
     },
   },
   {
-    timeseries: true,
+    timestamps: true,
   }
 );
 

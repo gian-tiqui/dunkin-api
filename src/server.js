@@ -21,8 +21,8 @@ const corsOptions = {
 
 const app = express();
 
-const PORT = process.env.PORT;
-const DB_URI = process.env.DB_URI || 8080;
+const PORT = process.env.PORT || 8080;
+const DB_URI = process.env.DB_URI;
 
 const routerInitialization = () => {
   app.use(userRouter);

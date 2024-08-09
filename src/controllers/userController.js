@@ -42,6 +42,19 @@ export const login = async (req, res) => {
       { expiresIn: REFRESH_TOKEN_EXPIRATION }
     );
 
+    const refreshTokenExists = RefreshToken.findOne({ refreshToken });
+
+    if (refreshTokenExists) {
+      console.log("refresh token exists");
+
+      return res.status(200).json({
+        status: "ok",
+        data: {
+          accessToken,
+        },
+      });
+    }
+
     if (user && (await bcrypt.compare(password, user.password))) {
       const newRefreshToken = new RefreshToken({
         token: refreshToken,
