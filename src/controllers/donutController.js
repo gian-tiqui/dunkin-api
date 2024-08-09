@@ -25,6 +25,10 @@ export const getDonutById = async (req, res) => {
     const donutID = req.params.id;
     const foundDonut = await Donut.findById(donutID);
 
+    if (!foundDonut) {
+      return res.status(404).json({ message: "Donut not found" });
+    }
+
     return res.status(200).json({ status: "ok", data: { donut: foundDonut } });
   } catch (error) {
     sendErr(res, error);
