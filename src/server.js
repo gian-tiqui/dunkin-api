@@ -25,10 +25,10 @@ const PORT = process.env.PORT || 8080;
 const DB_URI = process.env.DB_URI;
 
 const routerInitialization = () => {
+  app.use("/", welcome);
   app.use(userRouter);
   app.use(donutRouter);
   app.use(comboRouter);
-  app.use("/", welcome);
 };
 
 const startServer = () => {
