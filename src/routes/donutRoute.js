@@ -10,7 +10,7 @@ import {
 import validateToken from "../../middleware/validateTokenHandler.js";
 
 const storage = multer.diskStorage({
-  destination: "uploads/",
+  destination: "src/uploads/",
   fileFilter: (req, file, cb) => {
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
       return cb(new Error("Only jpg, jpeg, and png files are allowed!"));

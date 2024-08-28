@@ -1,31 +1,33 @@
 import { config } from "dotenv";
+import path from "path";
 import mongoose from "mongoose";
 import cors from "cors";
 import express from "express";
 import comboRouter from "./routes/comboRoute.js";
 import donutRouter from "./routes/donutRoute.js";
 import userRouter from "./routes/userRoute.js";
+import { fileURLToPath } from "url";
 
 export const API_PREFIX = "/api/v1";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 config();
 
-const welcome = (req, res) => {
-  res.send("meow meow");
-};
-
 const corsOptions = {
-  origin: "http://localhost:5174",
+  origin: "http://localhost:5173",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 };
 
 const app = express();
 
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 const PORT = process.env.PORT || 8080;
 const DB_URI = process.env.DB_URI;
 
 const routerInitialization = () => {
-  app.use("/", welcome);
   app.use(userRouter);
   app.use(donutRouter);
   app.use(comboRouter);

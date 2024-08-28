@@ -43,7 +43,7 @@ export const createDonut = async (req, res) => {
       return res.status(400).json({ message: "No image uploaded" });
     }
 
-    const imageURI = path.join(__dirname, "uploads", req.file.filename);
+    const imageURI = path.join(__dirname, "src", "uploads", req.file.filename);
     const imageName = req.file.originalname;
 
     const savedDonut = await new Donut({
