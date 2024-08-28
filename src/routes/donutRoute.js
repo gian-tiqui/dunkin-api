@@ -8,7 +8,6 @@ import {
   updateDonut,
 } from "../controllers/donutController.js";
 import validateToken from "../../middleware/validateTokenHandler.js";
-import { API_PREFIX } from "../server.js";
 
 const storage = multer.diskStorage({
   destination: "uploads/",
