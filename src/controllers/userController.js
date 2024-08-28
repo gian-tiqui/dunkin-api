@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
 import asyncHandler from "express-async-handler";
-import RefreshToken from "../models/refreshTokenModel.js";
 
 config();
 
@@ -15,9 +14,7 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({ email });
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
-    const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
     const ACCESS_TOKEN_EXPIRATION = 12 * 60 * 60; // 12hours
-    const REFRESH_TOKEN_EXPIRATION = 30 * 24 * 60 * 60; // 30days
     const accessToken = jwt.sign(
       {
         user: {
@@ -30,39 +27,7 @@ export const login = async (req, res) => {
       { expiresIn: ACCESS_TOKEN_EXPIRATION }
     );
 
-    const refreshToken = jwt.sign(
-      {
-        user: {
-          username: user.username,
-          email: user.email,
-          id: user._id,
-        },
-      },
-      refreshTokenSecret,
-      { expiresIn: REFRESH_TOKEN_EXPIRATION }
-    );
-
-    const refreshTokenExists = RefreshToken.findOne({ refreshToken });
-
-    if (refreshTokenExists) {
-      console.log("refresh token exists");
-
-      return res.status(200).json({
-        status: "ok",
-        data: {
-          accessToken,
-        },
-      });
-    }
-
     if (user && (await bcrypt.compare(password, user.password))) {
-      const newRefreshToken = new RefreshToken({
-        token: refreshToken,
-        user: user._id,
-      });
-
-      await newRefreshToken.save();
-
       return res.status(200).json({
         status: "ok",
         data: {
