@@ -12,7 +12,20 @@ const sendErr = (res, error) => {
 
 export const getDonuts = async (req, res) => {
   try {
-    const donuts = await Donut.find();
+    const filters = {};
+
+    if (req.query.name)
+      filters.name = { $regex: req.query.name, $options: "i" };
+
+    if (req.query.minPrice)
+      filters.price = { ...filters.price, $gte: req.query.minPrice };
+
+    if (req.query.maxPrice)
+      filters.price = { ...filters.price, $lte: req.query.maxPrice };
+
+    if (req.query.user) filters.user = req.query.user;
+
+    const donuts = await Donut.find(filters);
 
     return res.status(200).send({ status: "ok", data: { donuts: donuts } });
   } catch (error) {
