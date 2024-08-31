@@ -8,6 +8,7 @@ import donutRouter from "./routes/donutRoute.js";
 import refreshTokenRouter from "./routes/refreshTokenRoute.js";
 import { fileURLToPath } from "url";
 import authRouter from "./routes/authRoute.js";
+import userRouter from "./routes/usersRoute.js";
 
 export const API_PREFIX = "/api/v1";
 
@@ -33,6 +34,7 @@ const routerInitialization = () => {
   app.use(refreshTokenRouter);
   app.use(donutRouter);
   app.use(comboRouter);
+  app.use(userRouter);
 };
 
 const startServer = () => {
