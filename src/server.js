@@ -32,9 +32,9 @@ const DB_URI = process.env.DB_URI;
 const routerInitialization = () => {
   app.use(authRouter);
   app.use(refreshTokenRouter);
+  app.use(userRouter);
   app.use(donutRouter);
   app.use(comboRouter);
-  app.use(userRouter);
 };
 
 const startServer = () => {
