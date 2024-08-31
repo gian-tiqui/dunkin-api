@@ -28,6 +28,7 @@ const donutRouter = express.Router();
 
 const API_URI = "/api/v1/donuts";
 
+donutRouter.use(validateToken);
 donutRouter.get(API_URI, getDonuts);
 donutRouter.get(`${API_URI}/:id`, getDonutById);
 donutRouter.post(API_URI, upload.single("image"), createDonut);
