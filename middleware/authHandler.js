@@ -5,20 +5,21 @@ config();
 
 const authHandler = async (req, res, next) => {
   const token = req.header("x-access-token");
-
-  if (!token) {
+  if (!token)
     return res
       .status(403)
-      .json({ message: "Access denied: no token provided" });
-  }
+      .json({ error: true, message: "Access Denied: No token provided" });
 
   try {
     const tokenDetails = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-
     req.user = tokenDetails;
+
     next();
-  } catch (error) {
-    res.status(403).json({ message: "Access denied: Invalid token" });
+  } catch (err) {
+    console.log(err);
+    res
+      .status(403)
+      .json({ error: true, message: "Access Denied: Invalid token" });
   }
 };
 
