@@ -5,8 +5,8 @@ import {
   getCombo,
   getCombos,
   updateCombos,
-} from "../controllers/comboController";
-import validateToken from "../../middleware/validateTokenHandler";
+} from "../controllers/comboController.js";
+import validateToken from "../../middleware/validateTokenHandler.js";
 
 const comboRouter = express.Router();
 
