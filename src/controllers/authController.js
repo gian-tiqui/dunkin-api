@@ -20,8 +20,8 @@ export const register = async (req, res) => {
       return res.status(400).json({ message: "User already registered" });
     }
 
-    const salt = process.env.SALT;
-    const hashPassword = await bcrypt.hash(req.body.password, 10);
+    const salt = Number(process.env.SALT);
+    const hashPassword = await bcrypt.hash(req.body.password, salt);
 
     await new User({ ...req.body, password: hashPassword }).save();
 
