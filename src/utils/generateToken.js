@@ -9,11 +9,11 @@ const generateTokens = async (user) => {
     const payload = { _id: user._id, roles: user.roles };
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "14m",
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRATION,
     });
 
     const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: "30d",
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRATION,
     });
 
     const userToken = await UserToken.findOne({ userId: user._id });
