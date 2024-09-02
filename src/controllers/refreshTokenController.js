@@ -32,7 +32,6 @@ export const refresh = async (req, res) => {
 export const deleteRefreshToken = async (req, res) => {
   try {
     const { error } = refreshTokenBodyValidation(req.body);
-
     if (error) {
       return res.status(400).json({ message: error.details[0].message });
     }
